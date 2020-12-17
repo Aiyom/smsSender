@@ -1,0 +1,54 @@
+{% extends "index.html" %}
+{% block table %}
+<div class="content">
+    <h2>Донишчуён</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Хаст</th>
+            <th>Нест</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for person in people %}
+            <tr>
+            <form  name="{{ person.pk }}" method="post" action="{% url 'send' %}">
+                {% csrf_token %}
+            <input type="hidden" name="pk" value="{{ person.pk }}">
+                <td>{{ person.sirname }}</td>
+                <td>{{ person.name }}</td>
+                <td> <input id="sendSms" type="button" onclick="send(event, 1)" value="Хаст" ></td>
+                <td> <input id="sendSms" type="button" onclick="send(event, 0)" value="Нест" ></td>
+
+{#                <td> <button type="submit">Нест</button> </td>#}
+            </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+    <script>
+        function send(e, number) {
+            e.preventDefault()
+            $.ajax({
+                url: "/send",
+                type: "POST",
+                data: {
+                    pk: $('input[name=pk]').val(),
+                    csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                    number:number,
+
+                },
+                error: function () {alert('Ошибка получения запроса')},
+                success: function (response) {
+                }
+            })
+        }
+    </script>
+{% endblock table %}
+
+
+
