@@ -15,7 +15,7 @@ class Students(models.Model):
     timeOfKurs = models.IntegerField(verbose_name='Время урок', null=True)
     dayOfDate = models.CharField(verbose_name="Дни в недели", max_length=20)
     telParents = models.IntegerField(verbose_name='Телефон родители', null=True)
-    telMe = models.IntegerField(verbose_name='Мой телефон')
+    telMe = models.IntegerField(verbose_name='Номер телефон студента')
     group = models.IntegerField(verbose_name='Группа')
 
     def __str__(self):
